@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Contacts({ contacts }) {
+export default function Contacts({ contacts, onDeleteContact }) {
   return (
     <>
       <ul>
@@ -9,6 +9,7 @@ export default function Contacts({ contacts }) {
           return (
             <li key={id}>
               {name} : <span>{number}</span>
+              <button onClick={() => onDeleteContact(id)}>Delete</button>
             </li>
           );
         })}

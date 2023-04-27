@@ -37,21 +37,22 @@ export class App extends Component {
     //   alert(`${exisingInitalContact.name} is already in contacts`);
     //   return;
     // }
+
     const existingContact = contacts.find(
-      c => c.name.toLowerCase() === contact.name.toLowerCase()
+      user => user.name.toLowerCase() === contact.name.toLowerCase()
     );
 
     if (existingContact) {
-      alert(`Контакт "${existingContact.name}" уже существует!`);
+      alert(`${existingContact.name} is already in contacts`);
       return;
     }
 
     const existingInitialContact = this.state.contacts.find(
-      c => c.name.toLowerCase() === contact.name.toLowerCase()
+      user => user.name.toLowerCase() === contact.name.toLowerCase()
     );
 
     if (existingInitialContact) {
-      alert(`Контакт "${existingInitialContact.name}" уже существует!`);
+      alert(`${existingInitialContact.name}is already in contacts`);
       return;
     }
     this.setState(prevState => ({
@@ -70,6 +71,12 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
   render() {
     const { filter } = this.state;
     const visibleContact = this.getFindContact();
@@ -81,7 +88,11 @@ export class App extends Component {
           // onHandleInputChange={this.onHandleInputChange}
         />
         <FindContact value={filter} findContact={this.findContact} />
-        <Contacts contacts={visibleContact} data={this.onHandlerSubmitForm} />
+        <Contacts
+          contacts={visibleContact}
+          data={this.onHandlerSubmitForm}
+          onDeleteContact={this.deleteContact}
+        />
       </>
     );
   }
