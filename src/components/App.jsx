@@ -21,22 +21,6 @@ export class App extends Component {
       name: data.name,
       number: data.number,
     };
-    // const existingContact = contacts.find(
-    //   user => user.name.toLowerCase() === contact.name.toLowerCase()
-    // );
-
-    // if (existingContact) {
-    //   alert(`${existingContact.name} is already in contacts`);
-    //   return;
-    // }
-
-    // const exisingInitalContact = this.state.contacts.find(
-    //   user => user.name.toLowerCase() === contact.name.toLowerCase()
-    // );
-    // if (exisingInitalContact) {
-    //   alert(`${exisingInitalContact.name} is already in contacts`);
-    //   return;
-    // }
 
     const existingContact = contacts.find(
       user => user.name.toLowerCase() === contact.name.toLowerCase()
@@ -55,6 +39,7 @@ export class App extends Component {
       alert(`${existingInitialContact.name}is already in contacts`);
       return;
     }
+
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
     }));
@@ -82,11 +67,7 @@ export class App extends Component {
     const visibleContact = this.getFindContact();
     return (
       <>
-        <Form
-          onSubmit={this.onHandlerSubmitForm}
-          // state={this.state}
-          // onHandleInputChange={this.onHandleInputChange}
-        />
+        <Form onSubmit={this.onHandlerSubmitForm} />
         <FindContact value={filter} findContact={this.findContact} />
         <Contacts
           contacts={visibleContact}
