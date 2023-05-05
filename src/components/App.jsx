@@ -16,14 +16,9 @@ export class App extends Component {
 
   onHandlerSubmitForm = data => {
     const { contacts } = this.state;
-    const contact = {
-      id: nanoid(),
-      name: data.name,
-      number: data.number,
-    };
 
     const existingContact = contacts.find(
-      user => user.name.toLowerCase() === contact.name.toLowerCase()
+      user => user.name.toLowerCase() === data.name.toLowerCase()
     );
 
     if (existingContact) {
@@ -32,13 +27,18 @@ export class App extends Component {
     }
 
     const existingInitialContact = this.state.contacts.find(
-      user => user.name.toLowerCase() === contact.name.toLowerCase()
+      user => user.name.toLowerCase() === data.name.toLowerCase()
     );
 
     if (existingInitialContact) {
       alert(`${existingInitialContact.name}is already in contacts`);
       return;
     }
+
+    const contact = {
+      id: nanoid(),
+      ...data,
+    };
 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
@@ -69,11 +69,12 @@ export class App extends Component {
       <>
         <Form onSubmit={this.onHandlerSubmitForm} />
         <FindContact value={filter} findContact={this.findContact} />
-        <Contacts
-          contacts={visibleContact}
-          data={this.onHandlerSubmitForm}
-          onDeleteContact={this.deleteContact}
-        />
+        {visibleContact.length > 0 && (
+          <Contacts
+            contacts={visibleContact}
+            onDeleteContact={this.deleteContact}
+          />
+        )}
       </>
     );
   }
